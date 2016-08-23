@@ -89,5 +89,22 @@ angular.module('inventoryAdm.services')
         return res.data;
       });
     },
+    
+    /**
+     * Creates a shipment and its associated operations
+     */
+    createShipment: function (authToken, data, operations) {
+      
+      data.operations = operations;
+      
+      return $http.post(
+        API_URI + '/shipments',
+        data,
+        _authConfig(authToken)
+      )
+      .then(function (res) {
+        return res.data;
+      });
+    },
   }
 });

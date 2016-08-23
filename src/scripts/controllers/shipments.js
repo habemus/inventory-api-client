@@ -56,7 +56,6 @@ angular.module('inventoryAdm.controllers')
             searchText
           );
         };
-
         
         $scope.close = function () {
           $mdDialog.hide();
@@ -64,8 +63,42 @@ angular.module('inventoryAdm.controllers')
         
         $scope.submit = function () {
           var type = $scope.shipmentData.type;
+          var source = $scope.shipmentData.source;
+          var scheduledFor = $scope.shipmentData.scheduledFor;
+          
+          
+          var operations = $scope.shipmentData
+            .operations.map(function (opData) {
+              
+              var productModel  = opData.productModel;
+              var productExpiry = opData.productExpiry;
+              var quantity      = opData.quantity;
+              
+              return {
+                productModel: productModel,
+                productExpiry: productExpiry,
+                quantity: quantity,
+              };
+            });
           
           console.log('submit shipment', $scope.shipmentData);
+          
+          InventoryAPISvc.createShipment(
+            AuthSvc.getAuthToken(),
+            {
+              type: type,
+              scheduledFor: scheduledFor,
+              source: source,
+            },
+            operations
+          )
+          .then(function () {
+            $mdDialog.hide();
+          })
+          .catch(function (err) {
+            alert('houve um erro ao criar um modelo de produto');
+            console.warn(err);
+          });
         };
         
         $scope.addScheduledOperation = function () {

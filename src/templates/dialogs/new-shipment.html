@@ -22,6 +22,11 @@
           </div>
         </md-input-container>
         
+        <md-datepicker
+          ng-model="shipmentData.scheduledFor"
+          md-placeholder="Enter date"
+          md-min-date="minDate"></md-datepicker>
+        
         <md-autocomplete
           ng-show="shipmentData.type === 'entry'"
           class="md-block"
@@ -92,12 +97,12 @@
                     name="quantityValue"
                     required
                     type="number"
-                    ng-model="operation.quantityValue">
+                    ng-model="operation.quantity.value">
                 </md-input-container>
                 
                 <md-input-container>
                   <label>Unidade</label>
-                  <md-select ng-model="operation.quantityUnit" required>
+                  <md-select ng-model="operation.quantity.unit" required>
                     <md-option ng-value="'kg'">Kg</md-option>
                     <md-option ng-value="'l'">Litros</md-option>
                   </md-select>
@@ -105,6 +110,11 @@
                     <div ng-message="required">Unit is required</div>
                   </div>
                 </md-input-container>
+                
+                <md-datepicker
+                  ng-model="operation.productExpiry"
+                  md-placeholder="Validade"
+                  md-min-date="minDate"></md-datepicker>
                 
               </div>
               
